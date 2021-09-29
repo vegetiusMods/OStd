@@ -18,7 +18,7 @@ jobs:
       # Set these
       dist-path: ..\dist                                # Folder containing the output from the project files
       compiler-repo: Osmosis-Wrench/JContainers-Compiler-Only   # Github repository containing the papyrus compiler      # Just use ${{ github.token }} if the repo is not private
-      pyro-token: ${{ secrets.OSTIM_TOKEN }}
+      pyro-token: ${{ secrets.GH_TOKEN }}
       # Ignore these
       python-version: 3.x
       python-arch: x64
@@ -56,10 +56,11 @@ jobs:
 
     - name: Build releases
       run: |
-        .\pyro\pyro --game-path . --compiler-path ${Env:ppj_c} --flags-path ${Env:ppj_f} .\repo\${Env:ppj_p}
+        .\pyro\pyro --game-path . --compiler-path ${Env:ppj_c} --flags-path ${Env:ppj_f} --access-token ${Env:ppj_t} .\repo\${Env:ppj_p}
       env: 
         ppj_c: compiler\PapyrusCompiler.exe
         ppj_f: compiler\TESV_Papyrus_Flags.flg
+        ppj_t: ${{ env.pyro-token }}
         ppj_p: ${{ matrix.project-path }}
 
     - name: Prepare upload
