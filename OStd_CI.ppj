@@ -25,6 +25,7 @@
         <Import>https://github.com/Sairion350/ORomance/tree/main/scripts/source</Import>
     </Imports>
     <Folders>
+        <Folder>@MyProject\Scripts\Source</Folder>
         <Folder>@MyProject\Source\Scripts</Folder>
     </Folders>
     <ZipFiles Output="@Dist">
