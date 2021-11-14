@@ -69,7 +69,7 @@ Event OstimEnd(string eventName, string strArg, float numArg, Form sender)
                 while stdIndex < stdsCount
                     Spell std = OStdDiseaseList.GetAt(stdIndex) as Spell
 
-                    if playerRef.HasSpell(std)
+                    if IsPlayerInfected(std)
                         log("Player has " + std.GetName())
 
                         int infectedCounter = 0
@@ -109,7 +109,7 @@ Event OstimEnd(string eventName, string strArg, float numArg, Form sender)
                         actor infected = actors[infectedCounter]
 
                         if infected != infector
-                            if infected == playerRef && !playerRef.HasSpell(disease)
+                            if infected == playerRef && !IsPlayerInfected(disease)
                                 int roll = ostim.RandomInt(0, 99)
                                 if roll > mcm.transmissionChance
                                     debug.Notification(infector.GetDisplayName() + " gave you " + disease.GetName())
@@ -136,6 +136,12 @@ Event OstimEnd(string eventName, string strArg, float numArg, Form sender)
     endIf
 
 EndEvent
+
+bool function IsPlayerInfected(Spell disease)
+    MagicEffect stdEffect = disease.GetNthEffectMagicEffect(0)
+
+    return playerRef.HasMagicEffect(stdEffect)
+endFunction
 
 bool function InfectNpc(actor npc, Spell std, actor source)
     InitNpc(npc)
